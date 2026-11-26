@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A simple, minimal signup form with name, email, password, date of birth, role selection and terms agreement.">
+  <meta name="description" content="A minimal, accessible signup form with live email, password, and input validation.">
   <title>Signup Form</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip-link" href="#signup-form">Skip to signup form</a>
 
   <header class="site-header">
     <h1>Signup</h1>
@@ -21,66 +22,94 @@
   <main>
     <form id="signup-form" action="#" method="post" novalidate>
 
-      <label class="sr-only" for="fullname">Full Name</label>
-      <input type="text" id="fullname" name="fullname" placeholder="Full Name" autocomplete="name" required>
+      <div class="field">
+        <label class="sr-only" for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Full Name" autocomplete="name"
+               aria-required="true" aria-describedby="fullname-error" required>
+        <p class="field-error" id="fullname-error" aria-live="polite"></p>
+      </div>
 
-      <label class="sr-only" for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" required>
+      <div class="field">
+        <label class="sr-only" for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" autocomplete="email"
+               aria-required="true" aria-describedby="email-error" required>
+        <p class="field-error" id="email-error" aria-live="polite"></p>
+      </div>
 
-      <label class="sr-only" for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Password" autocomplete="new-password" minlength="8" required>
+      <div class="field">
+        <label class="sr-only" for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" placeholder="Password" autocomplete="new-password"
+                 minlength="8" aria-required="true" aria-describedby="password-rules password-error" required>
+          <button type="button" class="toggle-password" data-target="password" aria-label="Show password" aria-pressed="false">Show</button>
+        </div>
+        <ul class="password-rules" id="password-rules" aria-label="Password requirements">
+          <li data-rule="length"><span class="rule-icon" aria-hidden="true">○</span> 8+ characters</li>
+          <li data-rule="upper"><span class="rule-icon" aria-hidden="true">○</span> Uppercase letter</li>
+          <li data-rule="lower"><span class="rule-icon" aria-hidden="true">○</span> Lowercase letter</li>
+          <li data-rule="number"><span class="rule-icon" aria-hidden="true">○</span> Number</li>
+          <li data-rule="special"><span class="rule-icon" aria-hidden="true">○</span> Special character</li>
+        </ul>
+        <p class="field-error" id="password-error" aria-live="polite"></p>
+      </div>
 
-      <label class="sr-only" for="confirm">Confirm Password</label>
-      <input type="password" id="confirm" name="confirm" placeholder="Confirm Password" autocomplete="new-password" minlength="8" required>
+      <div class="field">
+        <label class="sr-only" for="confirm">Confirm Password</label>
+        <div class="input-wrap">
+          <input type="password" id="confirm" name="confirm" placeholder="Confirm Password" autocomplete="new-password"
+                 minlength="8" aria-required="true" aria-describedby="confirm-error" required>
+          <button type="button" class="toggle-password" data-target="confirm" aria-label="Show confirm password" aria-pressed="false">Show</button>
+        </div>
+        <p class="field-error" id="confirm-error" aria-live="polite"></p>
+      </div>
 
-      <label class="sr-only" for="dob">Date of birth (MM/DD/YYYY)</label>
-      <input type="text" id="dob" name="dob" placeholder="MM/DD/YYYY" inputmode="numeric" maxlength="10"
-             pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/(19|20)[0-9]{2}" title="Enter your date of birth as MM/DD/YYYY" required>
+      <div class="field">
+        <label class="sr-only" for="dob">Date of birth (MM/DD/YYYY)</label>
+        <input type="text" id="dob" name="dob" placeholder="MM/DD/YYYY" inputmode="numeric" maxlength="10"
+               aria-required="true" aria-describedby="dob-hint dob-error" required>
+        <p class="field-hint" id="dob-hint">Format: MM/DD/YYYY</p>
+        <p class="field-error" id="dob-error" aria-live="polite"></p>
+      </div>
 
-      <fieldset class="roles">
+      <fieldset class="roles" aria-describedby="role-error">
         <legend class="sr-only">I am a</legend>
-        <label class="choice"><input type="radio" name="role" value="student" required> Student</label>
-        <label class="choice"><input type="radio" name="role" value="employee" required> Employee</label>
+        <div class="roles-options">
+          <label class="choice"><input type="radio" name="role" value="student" required> Student</label>
+          <label class="choice"><input type="radio" name="role" value="employee" required> Employee</label>
+        </div>
+        <p class="field-error" id="role-error" aria-live="polite"></p>
       </fieldset>
 
-      <label class="choice terms">
-        <input type="checkbox" id="terms" name="terms" required>
-        I agree to all the Terms and conditions
-      </label>
+      <div class="field field-terms">
+        <label class="choice terms">
+          <input type="checkbox" id="terms" name="terms" aria-required="true" aria-describedby="terms-error" required>
+          <span>I agree to all the Terms and conditions</span>
+        </label>
+        <p class="field-error" id="terms-error" aria-live="polite"></p>
+      </div>
 
       <p id="form-status" role="status" aria-live="polite"></p>
 
-      <button type="submit">Signup</button>
+      <button type="submit" id="submit-btn">Signup</button>
     </form>
   </main>
 
   <footer class="site-footer">
-    <p>&copy; 2026 Signup Form Project &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a></p>
+    <p>&copy; 2026 Signup Form Project &middot; <button type="button" class="footer-link" data-modal="terms-modal">Terms</button> &middot; <button type="button" class="footer-link" data-modal="privacy-modal">Privacy</button></p>
   </footer>
 
-  <script>
-    var form = document.getElementById('signup-form');
-    var pw = document.getElementById('password');
-    var confirmPw = document.getElementById('confirm');
-    var status = document.getElementById('form-status');
+  <dialog id="terms-modal" class="info-modal" aria-labelledby="terms-title">
+    <h2 id="terms-title">Terms and Conditions</h2>
+    <p>By creating an account, you confirm that the details entered are accurate and used solely for demonstrating this signup experience. No personal data is stored or transmitted to external servers.</p>
+    <button type="button" class="modal-close">Close</button>
+  </dialog>
 
-    function checkMatch() {
-      confirmPw.setCustomValidity(pw.value !== confirmPw.value ? 'Passwords do not match' : '');
-    }
-    pw.addEventListener('input', checkMatch);
-    confirmPw.addEventListener('input', checkMatch);
+  <dialog id="privacy-modal" class="info-modal" aria-labelledby="privacy-title">
+    <h2 id="privacy-title">Privacy Policy</h2>
+    <p>All form validation runs locally in your browser. Your name, email, password, and date of birth are never sent over the network or saved in persistent storage.</p>
+    <button type="button" class="modal-close">Close</button>
+  </dialog>
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      checkMatch();
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        status.textContent = '';
-        return;
-      }
-      status.textContent = 'Thanks for signing up!';
-      form.reset();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
